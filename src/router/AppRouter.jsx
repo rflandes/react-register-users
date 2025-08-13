@@ -1,10 +1,10 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { AuthRoutes } from '../auth/routes/AuthRoutes';
 
 import { GeneralInfoRoutes } from '../general-info/routes/GeneralInfoRoutes';
 
 import { CheckingAuth } from '../ui/';
 import { useCheckAuth } from '../hooks';
+import { RegisterRoutes } from '../register/routes/RegisterRoutes';
 
 
 export const AppRouter = () => {
@@ -15,11 +15,24 @@ export const AppRouter = () => {
     return <CheckingAuth />
   }
 
+  console.log(status);
   return (
     <>
       <Routes>
 
+        <Route path="/auth/*" element={<RegisterRoutes />} />
+
         <Route path="/*" element={<GeneralInfoRoutes />} />
+        {/* 
+        {
+          (!(status === 'authenticated'))
+            ? <Route path="/*" element={<GeneralInfoRoutes />} />
+            : <Route path="/auth/*" element={<RegisterRoutes />} />
+        } */}
+
+        <Route path='/*' element={<Navigate to='/' />} />
+
+
         {/* {
           (status === 'authenticated')
           ? <Route path="/*" element={ <JournalRoutes /> } />

@@ -5,6 +5,7 @@ import { NavBarItem } from './NavBarItem';
 
 const menu = [
     { url: '/', title: 'UPCH Congreso 2025' },
+    { url: '/auth/login', title: 'Registro' },
     { url: '/comite', title: 'Comite' },
     { url: '/eventos-anteriores', title: 'Eventos' },
     { url: '/fechas-importantes', title: ' Fechas' },
@@ -38,7 +39,7 @@ export const NavBar = ({ drawerWidth = 240 }) => {
                 </IconButton>
 
                 <Grid container direction='row' justifyContent='space-between' alignItems='center'>
-                    {menu.map((item) => <NavBarItem {...item} />)}
+                    {menu.map((item) => <NavBarItem key={item.url} {...item} />)}
                 </Grid>
 
             </Toolbar>
