@@ -101,7 +101,7 @@ export const RegisterPage = () => {
 
                         <Grid item xs={12}>
                             <Button
-                                disabled={isCheckingAuthentication}
+                                disabled={isCheckingAuthentication || !isFormValid}
                                 type="submit"
                                 variant='contained'
                                 fullWidth>

@@ -17,6 +17,12 @@ export const RegisterRoutes = () => {
                     ? <Route path="check-in" element={<CheckinPage />} />
                     : <Route path="login" element={<LoginPage />} />
             }
+
+
+            {
+                (!(status === 'authenticated')) && <Route path='/*' element={<Navigate to="/" />} />
+            }
+
             <Route path="register" element={<RegisterPage />} />
             <Route path='/*' element={<Navigate to="/auth/check-in" />} />
         </Routes>
