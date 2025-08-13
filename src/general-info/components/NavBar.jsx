@@ -1,35 +1,24 @@
-// import { useDispatch } from 'react-redux';
 import { AppBar, Grid, IconButton, Toolbar, Typography } from '@mui/material';
-import { LogoutOutlined, MenuOutlined } from '@mui/icons-material';
-// import { startLogout } from '../../store/auth';
+import { MenuOutlined } from '@mui/icons-material';
 
-import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { NavBarItem } from './NavBarItem';
 
+const menu = [
+    { url: '/', title: 'UPCH Congreso 2025' },
+    { url: '/comite', title: 'Comite' },
+    { url: '/eventos-anteriores', title: 'Eventos' },
+    { url: '/fechas-importantes', title: ' Fechas' },
+    { url: '/formato', title: 'Formato' },
+    { url: '/hoteles', title: 'Hoteles' },
+    { url: '/objetivo', title: 'Objetivo' },
+    { url: '/pagos', title: 'Pagos' },
+    { url: '/posters', title: 'Posters Registrados' },
+    { url: '/preguntas', title: 'Preguntas' },
+    { url: '/sede', title: 'Sede' }
+
+];
 
 export const NavBar = ({ drawerWidth = 240 }) => {
-
-    // const dispatch = useDispatch();
-
-    const onLogout = () => {
-        // dispatch( startLogout() );
-        console.log('logging out pending ...');
-    }
-
-    const menu = [
-        { url: '/', title: 'UPCH Congreso 2025' },
-        { url: '/comite', title: 'Comite' },
-        { url: '/eventos-anteriores', title: 'Eventos' },
-        { url: '/fechas-importantes', title: ' Fechas' },
-        { url: '/formato', title: 'Formato' },
-        { url: '/hoteles', title: 'Hoteles' },
-        { url: '/objetivo', title: 'Objetivo' },
-        { url: '/pagos', title: 'Pagos' },
-        { url: '/posters', title: 'Posters Registrados' },
-        { url: '/preguntas', title: 'Preguntas' },
-        { url: '/sede', title: 'Sede' }
-
-    ];
 
     return (
         <AppBar
