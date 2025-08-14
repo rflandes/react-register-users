@@ -12,6 +12,8 @@ export const HomePage = () => {
 
             <h1>UPCH Congreso 2025</h1>
 
+            <hr />
+
             <h5 className="mt-3"> Objetivo del Encuentro </h5>
             <p>Integrar y difundir el quehacer científico y tecnológico en todos
                 los campos de la ciencia que desempeñan actualmente las mujeres dentro

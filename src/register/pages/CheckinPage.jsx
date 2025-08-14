@@ -4,8 +4,9 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Alert, Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { useForm } from '../../hooks';
 
-import { startCreatingUserWithEmailPassword, startLogout } from '../../store/auth';
+import { startLogout } from '../../store/auth';
 import { AuthLayout } from '../../auth/layout/AuthLayout';
+import { startNewParticipantForm } from '../../store/register/thunks';
 
 const formData = {
     titulo: '',
@@ -13,7 +14,8 @@ const formData = {
     coAutor1: '',
     coAutor2: '',
     coAutor3: '',
-    area: ''
+    area: '',
+    voucher: ''
 }
 
 const formValidations = {
@@ -38,6 +40,7 @@ export const CheckinPage = () => {
         coAutor2,
         coAutor3,
         area,
+        voucher,
         onInputChange,
         isFormValid,
         tituloValid,
@@ -56,6 +59,13 @@ export const CheckinPage = () => {
     }
     const onLogout = () => {
         dispatch(startLogout());
+    }
+
+    const onRegisterForm = (event) => {
+        event.preventDefault();
+
+        dispatch(startNewParticipantForm());
+
     }
 
     return (
@@ -142,6 +152,18 @@ export const CheckinPage = () => {
                         />
                     </Grid>
 
+                    <Grid item xs={12} sx={{ mt: 2 }}>
+                        <TextField
+                            label="voucher"
+                            type="text"
+                            placeholder='voucher id'
+                            fullWidth
+                            name="voucher"
+                            value={voucher}
+                            onChange={onInputChange}
+                        />
+                    </Grid>
+
 
                     <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
 
@@ -173,6 +195,17 @@ export const CheckinPage = () => {
                             SignOut
                         </Button>
                     </Grid>
+
+                    {/* // TODO: Register new participant
+                    <Grid item xs={12}>
+                        <Button
+                            disabled={isCheckingAuthentication}
+                            variant='contained'
+                            onClick={onRegisterForm}
+                            fullWidth>
+                            Register Form
+                        </Button>
+                    </Grid> */}
 
 
                     <Grid container direction='row' justifyContent='end'>

@@ -114,7 +114,7 @@ export const LoginPage = () => {
 
                     </Grid>
 
-                    <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
+                    <Grid container spacing={2} sx={{ mt: 5 }}>
                         <Grid container direction='row' justifyContent='end'>
                             Si olvidaste tu contraseña contactar a: <a href={`mailto:${contacto}`}> {contacto}</a>
                         </Grid>
