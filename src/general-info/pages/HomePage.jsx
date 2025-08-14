@@ -3,7 +3,6 @@ import { GeneralInfoLayout } from "../layout/GeneralInfoLayout"
 export const HomePage = () => {
 
     const onNavigateBack = () => {
-        console.log('back')
     }
 
     return (

@@ -20,8 +20,6 @@ export const startNewParticipantForm = () => {
             date: new Date().getTime(),
         }
 
-        console.log('creating new form....');
-
         dispatch(savingNewParticipantForm());
 
         const { uid } = getState().auth;
@@ -64,7 +62,6 @@ export const startSaveParticipantForm = () => {
 
         const { uid } = getState().auth;
         const { participantForm } = getState().register;
-        console.log('startSaveParticipantForm', participantForm)
 
         const docRef = docFirebase(FirebaseDB, uid, firebaseCollection);
         await setDoc(docRef, participantForm, { merge: true });

@@ -2,11 +2,14 @@ import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { Alert, Button, Grid, Link, TextField } from '@mui/material';
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
 
 
 import { AuthLayout } from '../../auth/layout/AuthLayout';
 import { useForm } from '../../hooks';
 import { startLoginWithEmailPassword } from '../../store/auth';
+import { useEffect } from 'react';
 
 const formData = {
     email: '',
@@ -33,6 +36,12 @@ export const LoginPage = () => {
         onInputChange } = useForm(formData, formValidations);
 
     const isAuthenticating = useMemo(() => status === 'checking', [status]);
+
+    useEffect(() => {
+        if (errorMessage?.length > 0) {
+            Swal.fire('Error de Login:', 'Usuario o Contraseña inválidos, favor de verificar.', 'error');
+        }
+    }, [errorMessage]);
 
     const onSubmit = (event) => {
         event.preventDefault();

@@ -24,7 +24,6 @@ export const fileUpload = async (file) => {
         return 'no-http';
 
     } catch (error) {
-        console.log(error);
         throw new Error(error.message);
     }
 

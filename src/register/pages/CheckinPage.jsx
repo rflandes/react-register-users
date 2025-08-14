@@ -1,16 +1,17 @@
 import { useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { Alert, Button, Grid, Link, TextField, Typography } from '@mui/material';
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
+
 import { useForm } from '../../hooks';
 
 import { startLogout } from '../../store/auth';
 import { AuthLayout } from '../../auth/layout/AuthLayout';
-import { useEffect } from 'react';
 import { startSaveParticipantForm } from '../../store/register/thunks';
 import { clearMessageSaved, setParticipantForm } from '../../store/register/registerSlice';
-import Swal from 'sweetalert2';
-import 'sweetalert2/dist/sweetalert2.css';
 
 // let newParticipantForm = {
 //     id: '',
@@ -24,9 +25,9 @@ import 'sweetalert2/dist/sweetalert2.css';
 // }
 
 const formValidations = {
-    // titulo: [(value) => value.length >= 1, 'El título es obligatorio.'],
-    // autor: [(value) => value.length >= 1, 'El autor es obligatorio.'],
-    // area: [(value) => value.length >= 1, 'El área de investigación es obligatorio.'],
+    titulo: [(value) => value?.length >= 1, 'El título es obligatorio.'],
+    autor: [(value) => value?.length >= 1, 'El autor es obligatorio.'],
+    area: [(value) => value?.length >= 1, 'El área de investigación es obligatorio.'],
 }
 
 export const CheckinPage = () => {
@@ -60,11 +61,7 @@ export const CheckinPage = () => {
             Swal.fire('Formulario actualizado', messageSaved, 'success');
             dispatch(clearMessageSaved());
         }
-    }, [messageSaved])
-
-    // const onSaveParticipantForm = () => {
-    //     dispatch(startSaveParticipantForm());
-    // }
+    }, [messageSaved]);
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -72,7 +69,6 @@ export const CheckinPage = () => {
         setFormSubmitted(true);
 
         if (!isFormValid) return;
-        console.log('participantForm', formState)
 
         dispatch(setParticipantForm(formState));
 
@@ -100,6 +96,7 @@ export const CheckinPage = () => {
                             onChange={onInputChange}
                             error={!!autorValid && formSubmitted}
                             helperText={autorValid}
+                            InputLabelProps={{ shrink: true }}
                         />
                     </Grid>
 
@@ -114,6 +111,7 @@ export const CheckinPage = () => {
                             onChange={onInputChange}
                             error={!!areaValid && formSubmitted}
                             helperText={areaValid}
+                            InputLabelProps={{ shrink: true }}
                         />
                     </Grid>
 
@@ -128,6 +126,7 @@ export const CheckinPage = () => {
                             onChange={onInputChange}
                             error={!!tituloValid && formSubmitted}
                             helperText={tituloValid}
+                            InputLabelProps={{ shrink: true }}
                         />
                     </Grid>
 
@@ -140,6 +139,7 @@ export const CheckinPage = () => {
                             name="coAutor1"
                             value={coAutor1}
                             onChange={onInputChange}
+                            InputLabelProps={{ shrink: true }}
                         />
                     </Grid>
 
@@ -152,6 +152,7 @@ export const CheckinPage = () => {
                             name="coAutor2"
                             value={coAutor2}
                             onChange={onInputChange}
+                            InputLabelProps={{ shrink: true }}
                         />
                     </Grid>
 
@@ -164,6 +165,7 @@ export const CheckinPage = () => {
                             name="coAutor3"
                             value={coAutor3}
                             onChange={onInputChange}
+                            InputLabelProps={{ shrink: true }}
                         />
                     </Grid>
 
@@ -176,6 +178,7 @@ export const CheckinPage = () => {
                             name="voucher"
                             value={voucher}
                             onChange={onInputChange}
+                            InputLabelProps={{ shrink: true }}
                         />
                     </Grid>
 
@@ -192,7 +195,7 @@ export const CheckinPage = () => {
 
                         <Grid item xs={12}>
                             <Button
-                                disabled={isSaving}
+                                disabled={isSaving || !isFormValid}
                                 type="submit"
                                 variant='contained'
                                 fullWidth>

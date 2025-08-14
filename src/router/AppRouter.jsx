@@ -15,7 +15,6 @@ export const AppRouter = () => {
     return <CheckingAuth />
   }
 
-  console.log(status);
   return (
     <>
       <Routes>

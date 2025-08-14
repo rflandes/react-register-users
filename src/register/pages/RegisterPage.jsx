@@ -1,11 +1,14 @@
 import { useMemo, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { Alert, Button, Grid, Link, TextField, Typography } from '@mui/material';
-import { useForm } from '../../hooks';
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
 
 import { startCreatingUserWithEmailPassword } from '../../store/auth';
 import { AuthLayout } from '../../auth/layout/AuthLayout';
+import { useForm } from '../../hooks';
 
 const formData = {
     email: '',
@@ -31,6 +34,20 @@ export const RegisterPage = () => {
         formState, displayName, email, password, onInputChange,
         isFormValid, displayNameValid, emailValid, passwordValid,
     } = useForm(formData, formValidations);
+
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (errorMessage?.length > 0) {
+                if (errorMessage.includes('auth/email-already-in-use')) {
+                    return Swal.fire('Error de Registro:', 'El correo ingresado ya está registrado, favor de contactar a soporte', 'error');
+                }
+
+                Swal.fire('Error de Registro:', 'Favor de contactar a soporte', 'error');
+            }
+        }, 100);
+
+    }, [errorMessage]);
 
     const onSubmit = (event) => {
         event.preventDefault();

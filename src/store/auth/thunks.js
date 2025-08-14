@@ -2,6 +2,7 @@ import { loginWithEmailPassword, registerUserWithEmailPassword, singInWithGoogle
 import { clearNotesLogout } from '../journal';
 import { clearParticipantFormLogout } from '../register/registerSlice';
 import { checkingCredentials, logout, login } from './';
+import { updateRegisterErrorMessage } from '../../store/auth';
 
 export const checkingAuthentication = () => {
     return async (dispatch) => {
@@ -32,12 +33,12 @@ export const startCreatingUserWithEmailPassword = ({ email, password, displayNam
         dispatch(checkingCredentials());
 
         const result = await registerUserWithEmailPassword({ email, password, displayName });
-        if (!result.ok) return dispatch(logout(result.errorMessage));
+        if (!result.ok) {
+            return dispatch(updateRegisterErrorMessage(result.errorMessage));
+        }
 
         dispatch(login(result))
-
     }
-
 }
 
 
@@ -47,13 +48,10 @@ export const startLoginWithEmailPassword = ({ email, password }) => {
         dispatch(checkingCredentials());
 
         const result = await loginWithEmailPassword({ email, password });
-        console.log(result);
 
         if (!result.ok) return dispatch(logout(result));
 
-        console.log('logged in')
         dispatch(login(result));
-
     }
 }
 

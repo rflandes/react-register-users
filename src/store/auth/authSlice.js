@@ -11,21 +11,29 @@ export const authSlice = createSlice({
         errorMessage: null,
     },
     reducers: {
-        login: ( state, { payload } ) => {
-            state.status = 'authenticated', // 'checking', 'not-authenticated', 'authenticated'
+        login: (state, { payload }) => {
+            state.status = 'authenticated'; // 'checking', 'not-authenticated', 'authenticated'
             state.uid = payload.uid;
             state.email = payload.email;
             state.displayName = payload.displayName;
             state.photoURL = payload.photoURL;
             state.errorMessage = null;
         },
-        logout: ( state, { payload } ) => {
-            state.status = 'not-authenticated', // 'checking', 'not-authenticated', 'authenticated'
+        logout: (state, { payload }) => {
+            state.status = 'not-authenticated'; // 'checking', 'not-authenticated', 'authenticated'
             state.uid = null;
             state.email = null;
             state.displayName = null;
             state.photoURL = null;
             state.errorMessage = payload?.errorMessage;
+        },
+        updateRegisterErrorMessage: (state, { payload }) => {
+            state.status = 'not-authenticated'; // 'checking', 'not-authenticated', 'authenticated'
+            state.uid = null;
+            state.email = null;
+            state.displayName = null;
+            state.photoURL = null;
+            state.errorMessage = payload;
         },
         checkingCredentials: (state) => {
             state.status = 'checking';
@@ -35,4 +43,4 @@ export const authSlice = createSlice({
 
 
 // Action creators are generated for each case reducer function
-export const { login, logout, checkingCredentials } = authSlice.actions;
+export const { login, logout, checkingCredentials, updateRegisterErrorMessage } = authSlice.actions;
