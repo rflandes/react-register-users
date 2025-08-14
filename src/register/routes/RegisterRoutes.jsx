@@ -10,21 +10,25 @@ export const RegisterRoutes = () => {
 
     return (
         <Routes>
-            {/* <Route path="login" element={<LoginPage />} /> */}
 
             {
-                (status === 'authenticated')
-                    ? <Route path="check-in" element={<CheckinPage />} />
-                    : <Route path="login" element={<LoginPage />} />
+                (status === 'authenticated') && <Route path="/login" element={<Navigate to="/auth/check-in" />} />
+            }
+
+            {
+                (status === 'authenticated') && <Route path="/register" element={<Navigate to="/auth/check-in" />} />
+            }
+
+            {
+                (!(status === 'authenticated')) && <Route path='/check-in' element={<Navigate to="/auth/login" />} />
             }
 
 
-            {
-                (!(status === 'authenticated')) && <Route path='/*' element={<Navigate to="/" />} />
-            }
-
+            <Route path="login" element={<LoginPage />} />
+            <Route path="check-in" element={<CheckinPage />} />
             <Route path="register" element={<RegisterPage />} />
-            <Route path='/*' element={<Navigate to="/auth/check-in" />} />
+            {/* <Route path='/*' element={<Navigate to="/login" />} /> */}
+
         </Routes>
     )
 }
