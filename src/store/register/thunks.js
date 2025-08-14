@@ -1,20 +1,16 @@
-import { collection, doc, setDoc } from 'firebase/firestore/lite';
+import { doc, setDoc, getDoc, doc as docFirebase } from 'firebase/firestore/lite';
 import { FirebaseDB } from '../../firebase/config';
-import { addNewEmptyParticipantForm, savingNewParticipantForm, setActiveParticipantForm, updateParticipantForm } from './registerSlice';
+import { savingNewParticipantForm, setParticipantForm, setSaving, updateParticipantForm } from './registerSlice';
 import { firebaseCollection, loadParticipantForm } from '../../helpers/loadParticipantForm';
+
 
 
 export const startNewParticipantForm = () => {
     return async (dispatch, getState) => {
 
-        dispatch(savingNewParticipantForm());
-
-        const { uid } = getState().auth;
-
-        const newParticipantForm = {
-            title: '',
+        const newForm = {
             id: '',
-            title: '',
+            titulo: '',
             autor: '',
             area: '',
             coautor1: '',
@@ -24,42 +20,54 @@ export const startNewParticipantForm = () => {
             date: new Date().getTime(),
         }
 
-        const newDoc = doc(collection(FirebaseDB, `${uid}/${firebaseCollection}`));
-        await setDoc(newDoc, newParticipantForm);
+        console.log('creating new form....');
 
-        newParticipantForm.id = newDoc.id;
+        dispatch(savingNewParticipantForm());
 
-        //! dispatch
-        dispatch(addNewEmptyParticipantForm(newParticipantForm));
-        dispatch(setActiveParticipantForm(newParticipantForm));
+        const { uid } = getState().auth;
+
+        const docRef = docFirebase(FirebaseDB, uid, firebaseCollection);
+        await setDoc(docRef, newForm, { merge: true });
+
+        dispatch(setParticipantForm(newForm));
     }
 }
 
 
-export const startLoadingParticipantNote = () => {
+export const startLoadingParticipantForm = () => {
     return async (dispatch, getState) => {
 
         const { uid } = getState().auth;
         if (!uid) throw new Error('El UID del usuario no existe');
 
-        const participantForms = await loadParticipantForm(uid);
-        dispatch(setParticipantForm(participantForms));
+        const participantForm = await loadParticipantForm(uid);
+
+        const newForm = {
+            id: '',
+            titulo: '',
+            autor: '',
+            area: '',
+            coautor1: '',
+            coautor2: '',
+            coautor3: '',
+            voucher: '',
+            date: new Date().getTime(),
+        }
+
+        dispatch(setParticipantForm(participantForm || newForm));
     }
 }
 
 export const startSaveParticipantForm = () => {
     return async (dispatch, getState) => {
-
-        dispatch(updateParticipantForm());
+        dispatch(setSaving());
 
         const { uid } = getState().auth;
-        const { active: participantForm } = getState().journal;
+        const { participantForm } = getState().register;
+        console.log('startSaveParticipantForm', participantForm)
 
-        const participantFormToFireStore = { ...participantForm };
-        delete participantFormToFireStore.id;
-
-        const docRef = doc(FirebaseDB, `${uid}/${firebaseCollection}/${participantForm.id}`);
-        await setDoc(docRef, participantFormToFireStore, { merge: true });
+        const docRef = docFirebase(FirebaseDB, uid, firebaseCollection);
+        await setDoc(docRef, participantForm, { merge: true });
 
         dispatch(updateParticipantForm(participantForm));
 

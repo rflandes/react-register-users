@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { Alert, Button, Grid, Link, TextField, Typography } from '@mui/material';
@@ -6,22 +6,27 @@ import { useForm } from '../../hooks';
 
 import { startLogout } from '../../store/auth';
 import { AuthLayout } from '../../auth/layout/AuthLayout';
-import { startNewParticipantForm } from '../../store/register/thunks';
+import { useEffect } from 'react';
+import { startSaveParticipantForm } from '../../store/register/thunks';
+import { clearMessageSaved, setParticipantForm } from '../../store/register/registerSlice';
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
 
-const formData = {
-    titulo: '',
-    autor: '',
-    coAutor1: '',
-    coAutor2: '',
-    coAutor3: '',
-    area: '',
-    voucher: ''
-}
+// let newParticipantForm = {
+//     id: '',
+//     titulo: '',
+//     autor: '',
+//     coAutor1: '',
+//     coAutor2: '',
+//     coAutor3: '',
+//     area: '',
+//     voucher: ''
+// }
 
 const formValidations = {
-    titulo: [(value) => value.length >= 1, 'El título es obligatorio.'],
-    autor: [(value) => value.length >= 1, 'El autor es obligatorio.'],
-    area: [(value) => value.length >= 1, 'El área de investigación es obligatorio.'],
+    // titulo: [(value) => value.length >= 1, 'El título es obligatorio.'],
+    // autor: [(value) => value.length >= 1, 'El autor es obligatorio.'],
+    // area: [(value) => value.length >= 1, 'El área de investigación es obligatorio.'],
 }
 
 export const CheckinPage = () => {
@@ -30,7 +35,8 @@ export const CheckinPage = () => {
     const [formSubmitted, setFormSubmitted] = useState(false);
 
     const { status, errorMessage } = useSelector(state => state.auth);
-    const isCheckingAuthentication = useMemo(() => status === 'checking', [status]);
+
+    const { participantForm, messageSaved, isSaving } = useSelector(state => state.register);
 
     const {
         formState,
@@ -46,26 +52,35 @@ export const CheckinPage = () => {
         tituloValid,
         autorValid,
         areaValid
-    } = useForm(formData, formValidations);
+    } = useForm(participantForm, formValidations);
+
+
+    useEffect(() => {
+        if (messageSaved.length > 0) {
+            Swal.fire('Formulario actualizado', messageSaved, 'success');
+            dispatch(clearMessageSaved());
+        }
+    }, [messageSaved])
+
+    // const onSaveParticipantForm = () => {
+    //     dispatch(startSaveParticipantForm());
+    // }
 
     const onSubmit = (event) => {
         event.preventDefault();
-        // setFormSubmitted(true);
+
+        setFormSubmitted(true);
 
         if (!isFormValid) return;
+        console.log('participantForm', formState)
 
-        // dispatch(startCreatingUserWithEmailPassword(formState));
-        console.log('In progress..')
+        dispatch(setParticipantForm(formState));
+
+        dispatch(startSaveParticipantForm());
+
     }
     const onLogout = () => {
         dispatch(startLogout());
-    }
-
-    const onRegisterForm = (event) => {
-        event.preventDefault();
-
-        dispatch(startNewParticipantForm());
-
     }
 
     return (
@@ -94,7 +109,7 @@ export const CheckinPage = () => {
                             type="text"
                             placeholder='area'
                             fullWidth
-                            name="autareaor"
+                            name="area"
                             value={area}
                             onChange={onInputChange}
                             error={!!areaValid && formSubmitted}
@@ -177,7 +192,7 @@ export const CheckinPage = () => {
 
                         <Grid item xs={12}>
                             <Button
-                                disabled={isCheckingAuthentication}
+                                disabled={isSaving}
                                 type="submit"
                                 variant='contained'
                                 fullWidth>
@@ -188,25 +203,13 @@ export const CheckinPage = () => {
 
                     <Grid item xs={12}>
                         <Button
-                            disabled={isCheckingAuthentication}
+                            disabled={isSaving}
                             variant='contained'
                             fullWidth
                             onClick={onLogout}>
                             SignOut
                         </Button>
                     </Grid>
-
-                    {/* // TODO: Register new participant
-                    <Grid item xs={12}>
-                        <Button
-                            disabled={isCheckingAuthentication}
-                            variant='contained'
-                            onClick={onRegisterForm}
-                            fullWidth>
-                            Register Form
-                        </Button>
-                    </Grid> */}
-
 
                     <Grid container direction='row' justifyContent='end'>
                         <Typography sx={{ mr: 1 }}>¿Todo listo?</Typography>

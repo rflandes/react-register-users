@@ -1,39 +1,40 @@
 import { loginWithEmailPassword, registerUserWithEmailPassword, singInWithGoogle, logoutFirebase } from '../../firebase/providers';
 import { clearNotesLogout } from '../journal';
+import { clearParticipantFormLogout } from '../register/registerSlice';
 import { checkingCredentials, logout, login } from './';
 
 export const checkingAuthentication = () => {
-    return async( dispatch ) => {
+    return async (dispatch) => {
 
-        dispatch( checkingCredentials() );
-        
+        dispatch(checkingCredentials());
+
     }
 }
 
 
 export const startGoogleSignIn = () => {
-    return async( dispatch ) => {
+    return async (dispatch) => {
 
-        dispatch( checkingCredentials() );
+        dispatch(checkingCredentials());
 
         const result = await singInWithGoogle();
-        if ( !result.ok ) return dispatch( logout( result.errorMessage ) );
+        if (!result.ok) return dispatch(logout(result.errorMessage));
 
-        dispatch( login( result ))
+        dispatch(login(result))
 
     }
 }
 
 
 export const startCreatingUserWithEmailPassword = ({ email, password, displayName }) => {
-    return async( dispatch ) => {
+    return async (dispatch) => {
 
-        dispatch( checkingCredentials() );
+        dispatch(checkingCredentials());
 
         const result = await registerUserWithEmailPassword({ email, password, displayName });
-        if ( !result.ok ) return dispatch( logout( result.errorMessage ) );
+        if (!result.ok) return dispatch(logout(result.errorMessage));
 
-        dispatch( login( result ))
+        dispatch(login(result))
 
     }
 
@@ -41,26 +42,29 @@ export const startCreatingUserWithEmailPassword = ({ email, password, displayNam
 
 
 export const startLoginWithEmailPassword = ({ email, password }) => {
-    return async( dispatch ) => {
+    return async (dispatch) => {
 
-        dispatch( checkingCredentials() );
+        dispatch(checkingCredentials());
 
         const result = await loginWithEmailPassword({ email, password });
         console.log(result);
 
-        if ( !result.ok ) return dispatch( logout( result ) );
-        dispatch( login( result ));
+        if (!result.ok) return dispatch(logout(result));
+
+        console.log('logged in')
+        dispatch(login(result));
 
     }
 }
 
 
 export const startLogout = () => {
-    return async( dispatch ) => {
-        
+    return async (dispatch) => {
+
         await logoutFirebase();
-        dispatch( clearNotesLogout() );
-        dispatch( logout() );
+        dispatch(clearNotesLogout());
+        dispatch(clearParticipantFormLogout());
+        dispatch(logout());
 
     }
 }

@@ -5,9 +5,8 @@ export const registerSlice = createSlice({
     initialState: {
         isSaving: false,
         messageSaved: '',
-        participantForms: [],
-        active: null
-        // active: {
+        participantForm: {},
+        // participantForm: {
         //     id: 'ABC123',
         //     title: '',
         //     autor: '',
@@ -22,34 +21,29 @@ export const registerSlice = createSlice({
             state.isSaving = true;
         },
         addNewEmptyParticipantForm: (state, action) => {
-            state.participantForms.push(action.payload);
+            state.participantForm = action.payload;
             state.isSaving = false;
         },
-        setActiveParticipantForm: (state, action) => {
-            state.active = action.payload;
+        setSaving: (state) => {
+            state.isSaving = true;
             state.messageSaved = '';
         },
         setParticipantForm: (state, action) => {
-            state.participantForms = action.payload;
+            state.participantForm = action.payload;
         },
-        updateParticipantForm: (state) => {
-            state.isSaving = true;
-            state.participantForms = state.participantForms.map(participantForm => {
+        updateParticipantForm: (state, action) => {
+            state.isSaving = false;
+            state.participantForm = action.payload;
 
-                if (participantForm.id === action.payload.id) {
-                    return action.payload;
-                }
-
-                return participantForm;
-            });
-
-            state.messageSaved = `${action.payload.title}, actualizada correctamente`;
+            state.messageSaved = `${action.payload.titulo}, actualizada correctamente`;
         },
         clearParticipantFormLogout: (state) => {
             state.isSaving = false;
             state.messageSaved = '';
-            state.participantForms = [];
-            state.active = null;
+            state.participantForm = {};
+        },
+        clearMessageSaved: (state) => {
+            state.messageSaved = '';
         },
     }
 });
@@ -57,9 +51,10 @@ export const registerSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const {
     addNewEmptyParticipantForm,
+    clearMessageSaved,
     clearParticipantFormLogout,
     savingNewParticipantForm,
-    setActiveParticipantForm,
     setParticipantForm,
+    setSaving,
     updateParticipantForm,
 } = registerSlice.actions;
