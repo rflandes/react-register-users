@@ -1,25 +1,33 @@
 import { AppBar, Grid, IconButton, Toolbar, Typography } from '@mui/material';
-import { MenuOutlined } from '@mui/icons-material';
+import { LogoutOutlined, MenuOutlined } from '@mui/icons-material';
 
 import { NavBarItem } from './NavBarItem';
+import { useDispatch, useSelector } from 'react-redux';
+import { startLogout } from '../../store/auth';
+import { userDisplayView } from '../../helpers';
 
 const menu = [
     { url: '/', title: 'UPCH Congreso 2025' },
-    { url: '/auth/login', title: 'Registro' },
-    { url: '/comite', title: 'Comite' },
-    { url: '/eventos-anteriores', title: 'Eventos' },
-    { url: '/fechas-importantes', title: ' Fechas' },
-    { url: '/formato', title: 'Formato' },
-    { url: '/hoteles', title: 'Hoteles' },
     { url: '/objetivo', title: 'Objetivo' },
-    { url: '/pagos', title: 'Pagos' },
+    { url: '/programa', title: 'Programa' },
+    { url: '/formato', title: 'Formato' },
+    { url: '/comite', title: 'Comité' },
     { url: '/posters', title: 'Posters Registrados' },
-    { url: '/preguntas', title: 'Preguntas' },
-    { url: '/sede', title: 'Sede' }
-
+    { url: '/sede', title: 'Sede' },
+    { url: '/preguntas', title: 'Preguntas Frecuentes' },
+    { url: '/pagos', title: 'Pagos' },
+    // { url: '/auth/login', title: 'Registro' },
 ];
 
 export const NavBar = ({ drawerWidth = 240 }) => {
+
+    const { status, displayName } = useSelector(state => state.auth);
+
+    const dispatch = useDispatch();
+
+    const onLogout = () => {
+        dispatch(startLogout());
+    }
 
     return (
         <AppBar
@@ -40,8 +48,26 @@ export const NavBar = ({ drawerWidth = 240 }) => {
 
                 <Grid container direction='row' justifyContent='space-between' alignItems='center'>
                     {menu.map((item) => <NavBarItem key={item.url} {...item} />)}
-                </Grid>
 
+                    {
+                        (status === 'authenticated')
+                            ?
+                            (<>
+                                <NavBarItem key={'/auth/check-in'} url='/auth/check-in' title="Documentación" />
+                                <IconButton
+                                    color='inherit'
+                                    onClick={onLogout}
+                                >
+                                    <Typography variant='h6' noWrap component='div'> {userDisplayView(displayName)} </Typography>
+                                    &nbsp;
+                                    <LogoutOutlined />
+                                </IconButton>
+                            </>)
+                            : (<>
+                                <NavBarItem key={'/auth/login'} url='/auth/login' title="Registro" />
+                            </>)
+                    }
+                </Grid>
             </Toolbar>
         </AppBar>
     )

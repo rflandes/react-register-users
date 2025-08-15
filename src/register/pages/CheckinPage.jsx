@@ -75,6 +75,7 @@ export const CheckinPage = () => {
         dispatch(startSaveParticipantForm());
 
     }
+
     const onLogout = () => {
         dispatch(startLogout());
     }
