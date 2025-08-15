@@ -22,29 +22,8 @@ export const AppRouter = () => {
         <Route path="/auth/*" element={<RegisterRoutes />} />
 
         <Route path="/*" element={<GeneralInfoRoutes />} />
-        {/* 
-        {
-          (!(status === 'authenticated'))
-            ? <Route path="/*" element={<GeneralInfoRoutes />} />
-            : <Route path="/auth/*" element={<RegisterRoutes />} />
-        } */}
 
         <Route path='/*' element={<Navigate to='/' />} />
-
-
-        {/* {
-          (status === 'authenticated')
-          ? <Route path="/*" element={ <JournalRoutes /> } />
-          : <Route path="/auth/*" element={ <AuthRoutes /> } />
-          }
-          
-          <Route path='/*' element={ <Navigate to='/auth/login' />  } /> */}
-
-        {/* Login y Registro */}
-        {/* <Route path="/auth/*" element={ <AuthRoutes /> } /> */}
-
-        {/* JournalApp */}
-        {/* <Route path="/*" element={ <JournalRoutes /> } /> */}
 
       </Routes>
     </>

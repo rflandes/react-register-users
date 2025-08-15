@@ -40,12 +40,14 @@ export const RegisterPage = () => {
         setTimeout(() => {
             if (errorMessage?.length > 0) {
                 if (errorMessage.includes('auth/email-already-in-use')) {
-                    return Swal.fire('Error de Registro:', 'El correo ingresado ya está registrado, favor de contactar a soporte', 'error');
+                    Swal.fire('Error de Registro:', 'El correo ingresado ya está registrado, favor de contactar a soporte', 'error');
                 }
+                else {
 
-                Swal.fire('Error de Registro:', 'Favor de contactar a soporte', 'error');
+                    Swal.fire('Error de Registro:', 'Favor de contactar a soporte', 'error');
+                }
             }
-        }, 100);
+        }, 10);
 
     }, [errorMessage]);
 
