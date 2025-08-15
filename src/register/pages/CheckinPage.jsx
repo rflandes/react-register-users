@@ -28,6 +28,7 @@ const formValidations = {
     titulo: [(value) => value?.length >= 1, 'El título es obligatorio.'],
     autor: [(value) => value?.length >= 1, 'El autor es obligatorio.'],
     area: [(value) => value?.length >= 1, 'El área de investigación es obligatorio.'],
+    emailAutor: [(value) => value?.includes('@'), 'El correo debe de tener una @'],
 }
 
 export const CheckinPage = () => {
@@ -35,7 +36,7 @@ export const CheckinPage = () => {
     const dispatch = useDispatch();
     const [formSubmitted, setFormSubmitted] = useState(false);
 
-    const { status, errorMessage } = useSelector(state => state.auth);
+    const { errorMessage } = useSelector(state => state.auth);
 
     const { participantForm, messageSaved, isSaving } = useSelector(state => state.register);
 
@@ -43,15 +44,18 @@ export const CheckinPage = () => {
         formState,
         titulo,
         autor,
+        emailAutor,
         coAutor1,
         coAutor2,
         coAutor3,
+        institute,
         area,
         voucher,
         onInputChange,
         isFormValid,
         tituloValid,
         autorValid,
+        emailAutorValid,
         areaValid
     } = useForm(participantForm, formValidations);
 
@@ -90,7 +94,7 @@ export const CheckinPage = () => {
                         <TextField
                             label="Autor"
                             type="text"
-                            placeholder='Autor'
+                            placeholder='Nombre del Autor Principal'
                             fullWidth
                             name="autor"
                             value={autor}
@@ -103,9 +107,24 @@ export const CheckinPage = () => {
 
                     <Grid item xs={12} sx={{ mt: 2 }}>
                         <TextField
-                            label="area"
+                            label="Correo del Autor Principal"
+                            type="email"
+                            placeholder='correo@google.com'
+                            fullWidth
+                            name="emailAutor"
+                            value={emailAutor}
+                            onChange={onInputChange}
+                            error={!!emailAutorValid && formSubmitted}
+                            helperText={emailAutorValid}
+                            InputLabelProps={{ shrink: true }}
+                        />
+                    </Grid>
+
+                    <Grid item xs={12} sx={{ mt: 2 }}>
+                        <TextField
+                            label="Area"
                             type="text"
-                            placeholder='area'
+                            placeholder='Area de Investigación'
                             fullWidth
                             name="area"
                             value={area}
@@ -118,9 +137,9 @@ export const CheckinPage = () => {
 
                     <Grid item xs={12} sx={{ mt: 2 }}>
                         <TextField
-                            label="Título"
+                            label="Proyecto"
                             type="text"
-                            placeholder='Título'
+                            placeholder='Nombre del proyecto de Investigación'
                             fullWidth
                             name="titulo"
                             value={titulo}
@@ -133,9 +152,22 @@ export const CheckinPage = () => {
 
                     <Grid item xs={12} sx={{ mt: 2 }}>
                         <TextField
-                            label="Co-Autor1"
+                            label="Instituto de Procedencia"
                             type="text"
-                            placeholder='coAutor1'
+                            placeholder='Instituto de Procedencia'
+                            fullWidth
+                            name="institute"
+                            value={institute}
+                            onChange={onInputChange}
+                            InputLabelProps={{ shrink: true }}
+                        />
+                    </Grid>
+
+                    <Grid item xs={12} sx={{ mt: 2 }}>
+                        <TextField
+                            label="Co-Autor 1"
+                            type="text"
+                            placeholder='Co-Autor 1'
                             fullWidth
                             name="coAutor1"
                             value={coAutor1}
@@ -146,9 +178,9 @@ export const CheckinPage = () => {
 
                     <Grid item xs={12} sx={{ mt: 2 }}>
                         <TextField
-                            label="coAutor2"
+                            label="Co-Autor 2"
                             type="text"
-                            placeholder='coAutor2'
+                            placeholder='Co-Autor 2'
                             fullWidth
                             name="coAutor2"
                             value={coAutor2}
@@ -159,9 +191,9 @@ export const CheckinPage = () => {
 
                     <Grid item xs={12} sx={{ mt: 2 }}>
                         <TextField
-                            label="coAutor3"
+                            label="Co-Autor 3"
                             type="text"
-                            placeholder='coAutor3'
+                            placeholder='Co-Autor 3'
                             fullWidth
                             name="coAutor3"
                             value={coAutor3}
@@ -172,9 +204,9 @@ export const CheckinPage = () => {
 
                     <Grid item xs={12} sx={{ mt: 2 }}>
                         <TextField
-                            label="voucher"
+                            label="Voucher"
                             type="text"
-                            placeholder='voucher id'
+                            placeholder='Folio de ficha de depósito'
                             fullWidth
                             name="voucher"
                             value={voucher}

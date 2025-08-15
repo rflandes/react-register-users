@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom"
-import { ComitePage, FormatoPage, HomePage, ObjetivoPage, PostersRegistradosPage, PreguntasPage, ProgramaPage } from "../pages"
+import { ComitePage, FormatoPage, HomePage, ObjetivoPage, PostersRegistradosPage, PreguntasPage, ProgramaPage, SedePage } from "../pages"
 
 
 export const GeneralInfoRoutes = () => {
@@ -12,6 +12,7 @@ export const GeneralInfoRoutes = () => {
             <Route path="/posters" element={<PostersRegistradosPage />} />
             <Route path="/preguntas" element={<PreguntasPage />} />
             <Route path="/programa" element={<ProgramaPage />} />
+            <Route path="/sede" element={<SedePage />} />
 
             <Route path="/*" element={<Navigate to="/" />} />
         </Routes>

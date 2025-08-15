@@ -1,3 +1,5 @@
+import { GeneralInfoLayout } from "../layout/GeneralInfoLayout"
+
 export const ProgramaPage = () => {
     return (
         <GeneralInfoLayout>

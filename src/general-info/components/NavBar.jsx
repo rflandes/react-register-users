@@ -15,8 +15,7 @@ const menu = [
     { url: '/posters', title: 'Posters Registrados' },
     { url: '/sede', title: 'Sede' },
     { url: '/preguntas', title: 'Preguntas Frecuentes' },
-    { url: '/pagos', title: 'Pagos' },
-    // { url: '/auth/login', title: 'Registro' },
+    { url: '/auth/login', title: 'Registro' },
 ];
 
 export const NavBar = ({ drawerWidth = 240 }) => {
@@ -41,7 +40,7 @@ export const NavBar = ({ drawerWidth = 240 }) => {
                 <IconButton
                     color='inherit'
                     edge="start"
-                    sx={{ mr: 2, display: { sm: 'none' } }}
+                    sx={{ display: { xs: 'block', lg: 'none' } }}
                 >
                     <MenuOutlined />
                 </IconButton>

@@ -17,10 +17,9 @@ export const GeneralInfoLayout = ({ children }) => {
                 component='main'
                 sx={{ flexGrow: 1, p: 3 }}
             >
-                <Toolbar />
-                <div className="container text-center">
+                <div className="text-center">
                     <div className="row justify-content-center mt-5" >
-                        <div className="col-10" >
+                        <div className="col-12" >
 
                             <Grid
                                 className='animate__animated animate__fadeIn animate__faster'
@@ -30,10 +29,11 @@ export const GeneralInfoLayout = ({ children }) => {
                                 alignItems="center"
                                 justifyContent="center"
                                 sx={{
-                                    minHeight: 'calc(100vh - 200px)',
+                                    minHeight: 'calc(100vh - 100px)',
                                     color: 'primary.fontcolor',
                                     backgroundColor: 'secondary.main',
-                                    borderRadius: 3
+                                    borderRadius: 3,
+                                    padding: 5
                                 }}
                             >
                                 <Grid item xs={12}>
