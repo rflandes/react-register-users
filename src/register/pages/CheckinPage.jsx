@@ -243,7 +243,7 @@ export const CheckinPage = () => {
                             variant='contained'
                             fullWidth
                             onClick={onLogout}>
-                            SignOut
+                            Salir
                         </Button>
                     </Grid>
 

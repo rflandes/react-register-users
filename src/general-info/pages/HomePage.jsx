@@ -4,12 +4,17 @@ export const HomePage = () => {
 
     return (
         <GeneralInfoLayout>
+            <img
+                srcSet={`/logo-congreso.png`}
+                src={`/logo-congreso.png`}
+                width={300}
 
-
+                loading="lazy"
+            />
             <h1>Universidad Politécnica de Chiapas</h1>
-            <h4>La Universidad Politécnica de Chiapas y la Licenciatura en Administración/LAGE
+            <p>La Universidad Politécnica de Chiapas y la Licenciatura en Administración/LAGE
                 através del comité organizador, convocan cordialmente a toda la comunidad estudiantil,
-                académica y profesional al:</h4>
+                académica y profesional al:</p>
 
             <hr />
 
@@ -21,6 +26,24 @@ export const HomePage = () => {
                 y a la modernización de México.
             </p>
 
+
+            <img
+                srcSet={`/convocatoria.png`}
+                width={600}
+                className="box-shadow"
+                style={{ borderRadius: '5%' }}
+                loading="lazy"
+            />
+
+            <hr />
+
+            <img
+                srcSet={`/cartel.png`}
+                width={600}
+                className="box-shadow"
+                style={{ borderRadius: '5%' }}
+                loading="lazy"
+            />
         </GeneralInfoLayout>
     )
 }

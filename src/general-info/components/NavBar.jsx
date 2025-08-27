@@ -5,9 +5,9 @@ import { NavBarItem } from './NavBarItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { startLogout } from '../../store/auth';
 import { userDisplayView } from '../../helpers';
+import { NavLink } from 'react-router-dom';
 
 const menu = [
-    { url: '/', title: 'UPCH Congreso 2025' },
     { url: '/objetivo', title: 'Objetivo' },
     { url: '/programa', title: 'Programa' },
     { url: '/formato', title: 'Formato' },
@@ -15,7 +15,7 @@ const menu = [
     { url: '/posters', title: 'Posters Registrados' },
     { url: '/sede', title: 'Sede' },
     { url: '/preguntas', title: 'Preguntas Frecuentes' },
-    { url: '/auth/login', title: 'Registro' },
+    // { url: '/auth/login', title: 'Registro' },
 ];
 
 export const NavBar = ({ drawerWidth = 240 }) => {
@@ -46,6 +46,21 @@ export const NavBar = ({ drawerWidth = 240 }) => {
                 </IconButton>
 
                 <Grid container direction='row' justifyContent='space-between' alignItems='center'>
+
+                    <NavLink
+                        className={({ isActive }) => `nav-item nav-link ${isActive ? 'active' : ''}`}
+                        to={'/'}
+                    >
+                        <img
+                            srcSet={`https://www.upchiapas.edu.mx/images/UPlogoblancoN.png`}
+                            src={`https://www.upchiapas.edu.mx/images/UPlogoblancoN.png`}
+                            width={300}
+
+                            loading="lazy"
+                        />
+
+                    </NavLink>
+
                     {menu.map((item) => <NavBarItem key={item.url} {...item} />)}
 
                     {
