@@ -1,4 +1,4 @@
-import { doc, setDoc, getDoc, doc as docFirebase } from 'firebase/firestore/lite';
+import { setDoc, doc as docFirebase, collection } from 'firebase/firestore/lite';
 import { FirebaseDB } from '../../firebase/config';
 import { savingNewParticipantForm, setParticipantForm, setSaving, updateParticipantForm } from './registerSlice';
 import { firebaseCollection, loadParticipantForm } from '../../helpers/loadParticipantForm';
@@ -24,8 +24,10 @@ export const startNewParticipantForm = () => {
 
         const { uid } = getState().auth;
 
-        const docRef = docFirebase(FirebaseDB, uid, firebaseCollection);
-        await setDoc(docRef, newForm, { merge: true });
+        const path = `congress`;
+        const congressRef = collection(FirebaseDB, path);
+
+        await setDoc(docFirebase(congressRef, uid), newForm, { merge: true });
 
         dispatch(setParticipantForm(newForm));
     }
@@ -39,6 +41,7 @@ export const startLoadingParticipantForm = () => {
         if (!uid) throw new Error('El UID del usuario no existe');
 
         const participantForm = await loadParticipantForm(uid);
+        // await loadAllParticipantsForm();
 
         const newForm = {
             id: '',
@@ -63,7 +66,30 @@ export const startSaveParticipantForm = () => {
         const { uid } = getState().auth;
         const { participantForm } = getState().register;
 
-        const docRef = docFirebase(FirebaseDB, uid, firebaseCollection);
+        const path = `congress`;
+        const congressRef = collection(FirebaseDB, path);
+
+        await setDoc(docFirebase(congressRef, uid),
+            {
+                ...participantForm,
+                id: uid
+
+            }, { merge: true });
+
+        dispatch(updateParticipantForm(participantForm));
+
+    }
+}
+
+export const startGetAllParticipantsForm = () => {
+    return async (dispatch, getState) => {
+        dispatch(setSaving());
+
+        const { uid } = getState().auth;
+        const { participantForm } = getState().register;
+
+        const path = `congress/${uid}/forms`;
+        const docRef = docFirebase(FirebaseDB, path, firebaseCollection);
         await setDoc(docRef, participantForm, { merge: true });
 
         dispatch(updateParticipantForm(participantForm));
@@ -71,12 +97,11 @@ export const startSaveParticipantForm = () => {
     }
 }
 
-
 // export const startUploadingFiles = (files = []) => {
 //     return async (dispatch) => {
 //         dispatch(setSaving());
 
-//         // await fileUpload( files[0] );
+// await fileUpload( files[0] );
 //         const fileUploadPromises = [];
 //         for (const file of files) {
 //             fileUploadPromises.push(fileUpload(file))

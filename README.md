@@ -6,3 +6,7 @@ Project to register users
 * Firebase
 * Authentication
 * Firebase Database
+
+
+* Firebase Database queries
+https://firebase.google.com/docs/firestore/query-data/queries?hl=es-419
