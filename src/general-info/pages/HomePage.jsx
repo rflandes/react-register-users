@@ -1,12 +1,12 @@
 import { GeneralInfoLayout } from "../layout/GeneralInfoLayout"
 
+const path = import.meta.env.VITE_FIREBASE_GITHUB_HOST;
 export const HomePage = () => {
 
     return (
         <GeneralInfoLayout>
             <img
-                srcSet={`/logo-congreso.png`}
-                src={`/logo-congreso.png`}
+                srcSet={`${path}/logo-congreso.png`}
                 width={300}
 
                 loading="lazy"
@@ -28,7 +28,7 @@ export const HomePage = () => {
 
 
             <img
-                srcSet={`/convocatoria.png`}
+                srcSet={`${path}/convocatoria.png`}
                 width={600}
                 className="box-shadow"
                 style={{ borderRadius: '5%' }}
@@ -38,7 +38,7 @@ export const HomePage = () => {
             <hr />
 
             <img
-                srcSet={`/cartel.png`}
+                srcSet={`${path}/cartel.png`}
                 width={600}
                 className="box-shadow"
                 style={{ borderRadius: '5%' }}
