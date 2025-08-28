@@ -3,10 +3,10 @@ import { Grid, Typography } from '@mui/material';
 
 export const AuthLayout = ({ children, title = '' }) => {
   return (
-    
+
     <Grid
       container
-      spacing={ 0 }
+      spacing={0}
       direction="column"
       alignItems="center"
       justifyContent="center"
@@ -14,21 +14,22 @@ export const AuthLayout = ({ children, title = '' }) => {
     >
 
       <Grid item
-       className='box-shadow'
-       xs={ 3 }
-       sx={{ 
-            width: { sm: 450 },
-            backgroundColor: 'white', 
-            padding: 3, 
-            borderRadius: 2 
+        className='box-shadow'
+        xs={3}
+        sx={{
+          // width: { sm: 450 },
+          width: '100%',
+          backgroundColor: 'white',
+          padding: 3,
+          borderRadius: 2
         }}>
-          
-          <Typography variant='h5' sx={{ mb: 1 }}>{ title }</Typography>
 
-            
-            { children }
+        <Typography variant='h5' sx={{ mb: 1 }}>{title}</Typography>
 
-        </Grid>
+
+        {children}
+
+      </Grid>
 
     </Grid>
 

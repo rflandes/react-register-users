@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { CheckinPage, LoginPage, RegisterPage } from '../pages';
+import { CheckinPage, LoginPage, ParticipantsPage, RegisterPage } from '../pages';
 import { useCheckAuth } from '../../hooks';
 
 
@@ -29,6 +29,7 @@ export const RegisterRoutes = () => {
 
             <Route path="login" element={<LoginPage />} />
             <Route path="check-in" element={<CheckinPage />} />
+            <Route path="participants" element={<ParticipantsPage />} />
             <Route path="register" element={<RegisterPage />} />
 
         </Routes>
