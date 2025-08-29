@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { startLogout } from '../../store/auth';
 import { userDisplayView } from '../../helpers';
 import { NavLink } from 'react-router-dom';
+import { MenuListComposition } from './MenuListComposition';
 
 const menu = [
     { url: '/objetivo', title: 'Objetivo' },
@@ -37,13 +38,15 @@ export const NavBar = ({ drawerWidth = 240 }) => {
             }}
         >
             <Toolbar>
-                <IconButton
+                <MenuListComposition />
+
+                {/* <IconButton
                     color='inherit'
                     edge="start"
                     sx={{ display: { xs: 'block', lg: 'none' } }}
                 >
                     <MenuOutlined />
-                </IconButton>
+                </IconButton> */}
 
                 <Grid container direction='row' justifyContent='space-between' alignItems='center'>
 
