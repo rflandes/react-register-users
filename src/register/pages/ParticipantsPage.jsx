@@ -1,7 +1,6 @@
-import { AuthLayout } from "../../auth/layout/AuthLayout"
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
-
+import { AdminLayout } from "../../auth/layout/AdminLayout";
 
 const columns = [
     // { field: 'id', headerName: 'ID', width: 70 },
@@ -43,7 +42,7 @@ const paginationModel = { page: 0, pageSize: 5 };
 
 export const ParticipantsPage = () => {
     return (
-        <AuthLayout title="Participantes registrados">
+        <AdminLayout title="Participantes registrados">
 
             <Paper sx={{ height: 600, width: '100%' }}>
                 <DataGrid
@@ -55,6 +54,6 @@ export const ParticipantsPage = () => {
                     sx={{ border: 0 }}
                 />
             </Paper>
-        </AuthLayout>
+        </AdminLayout>
     );
 }

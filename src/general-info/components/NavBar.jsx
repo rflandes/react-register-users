@@ -1,10 +1,7 @@
-import { AppBar, Grid, IconButton, Toolbar, Typography } from '@mui/material';
-import { LogoutOutlined, MenuOutlined } from '@mui/icons-material';
+import { AppBar, Box, Grid, Toolbar } from '@mui/material';
 
 import { NavBarItem } from './NavBarItem';
-import { useDispatch, useSelector } from 'react-redux';
-import { startLogout } from '../../store/auth';
-import { userDisplayView } from '../../helpers';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { MenuListComposition } from './MenuListComposition';
 
@@ -16,18 +13,27 @@ const menu = [
     { url: '/posters', title: 'Posters Registrados' },
     { url: '/sede', title: 'Sede' },
     { url: '/preguntas', title: 'Preguntas Frecuentes' },
-    // { url: '/auth/login', title: 'Registro' },
 ];
 
 export const NavBar = ({ drawerWidth = 240 }) => {
 
     const { status, displayName } = useSelector(state => state.auth);
 
-    const dispatch = useDispatch();
+    const buildMenu = () => {
+        if (status === 'authenticated') {
+            return [
+                ...menu,
+                { url: '/auth/check-in', title: 'Documentación' },
+                { url: '/logout', title: displayName }
+            ]
+        }
 
-    const onLogout = () => {
-        dispatch(startLogout());
+        return [
+            ...menu,
+            { url: '/auth/login', title: 'Registro' }
+        ]
     }
+
 
     return (
         <AppBar
@@ -38,15 +44,11 @@ export const NavBar = ({ drawerWidth = 240 }) => {
             }}
         >
             <Toolbar>
-                <MenuListComposition />
-
-                {/* <IconButton
-                    color='inherit'
-                    edge="start"
-                    sx={{ display: { xs: 'block', lg: 'none' } }}
-                >
-                    <MenuOutlined />
-                </IconButton> */}
+                <Box sx={{
+                    display: { xs: 'block', lg: 'none' }
+                }}>
+                    <MenuListComposition />
+                </Box>
 
                 <Grid container direction='row' justifyContent='space-between' alignItems='center'>
 
@@ -64,26 +66,7 @@ export const NavBar = ({ drawerWidth = 240 }) => {
 
                     </NavLink>
 
-                    {menu.map((item) => <NavBarItem key={item.url} {...item} />)}
-
-                    {
-                        (status === 'authenticated')
-                            ?
-                            (<>
-                                <NavBarItem key={'/auth/check-in'} url='/auth/check-in' title="Documentación" />
-                                <IconButton
-                                    color='inherit'
-                                    onClick={onLogout}
-                                >
-                                    <Typography variant='h6' noWrap component='div'> {userDisplayView(displayName)} </Typography>
-                                    &nbsp;
-                                    <LogoutOutlined />
-                                </IconButton>
-                            </>)
-                            : (<>
-                                <NavBarItem key={'/auth/login'} url='/auth/login' title="Registro" />
-                            </>)
-                    }
+                    {buildMenu().map((item) => <NavBarItem key={item.url} {...item} />)}
                 </Grid>
             </Toolbar>
         </AppBar>

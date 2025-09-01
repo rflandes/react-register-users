@@ -1,8 +1,7 @@
-import { Grid, Toolbar } from '@mui/material';
+import { Grid } from '@mui/material';
 import { Box } from '@mui/system'
 import { NavBar } from '../components/NavBar';
 import { FooterBar } from '../components/FooterBar';
-
 
 const drawerWidth = 0;
 
@@ -12,10 +11,7 @@ export const GeneralInfoLayout = ({ children }) => {
 
             <NavBar drawerWidth={drawerWidth} />
 
-            {/* <SideBar drawerWidth={ drawerWidth } /> */}
-
             <div>
-
                 <Box
                     component='main'
                     sx={{ flexGrow: 1, p: 3 }}
@@ -52,8 +48,6 @@ export const GeneralInfoLayout = ({ children }) => {
 
                 <FooterBar />
             </div>
-
-
         </Box>
     )
 }

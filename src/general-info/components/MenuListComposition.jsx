@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Button from '@mui/material/Button';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Grow from '@mui/material/Grow';
@@ -9,26 +8,38 @@ import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
 import { MenuOutlined } from '@mui/icons-material';
 import { useTheme } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { startLogout } from '../../store/auth';
 
 export const MenuListComposition = () => {
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
     const theme = useTheme();
+    const navigate = useNavigate();
+    const { status, displayName } = useSelector(state => state.auth);
 
+    const dispatch = useDispatch();
+
+    const onLogout = () => {
+        dispatch(startLogout());
+    }
 
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen);
     };
 
-    const handleClose = (event) => {
+    const handleClose = (event, url) => {
         if (anchorRef.current && anchorRef.current.contains(event.target)) {
             return;
         }
 
         setOpen(false);
+        if (url)
+            navigate(url);
     };
 
-    function handleListKeyDown(event) {
+    const handleListKeyDown = (event) => {
         if (event.key === 'Tab') {
             event.preventDefault();
             setOpen(false);
@@ -49,7 +60,7 @@ export const MenuListComposition = () => {
 
     return (
         <Stack direction="row" spacing={2}>
-            <div>
+            <div style={{ marginLeft: -25 }}>
                 <Button
                     color='inherit'
                     ref={anchorRef}
@@ -89,15 +100,26 @@ export const MenuListComposition = () => {
                                         aria-labelledby="composition-button"
                                         onKeyDown={handleListKeyDown}
                                     >
-                                        <MenuItem onClick={handleClose}>Objetivo</MenuItem>
-                                        <MenuItem onClick={handleClose}>Programa</MenuItem>
-                                        <MenuItem onClick={handleClose}>Formato</MenuItem>
-                                        <MenuItem onClick={handleClose}>Comité</MenuItem>
-                                        <MenuItem onClick={handleClose}>Posters Registrados</MenuItem>
-                                        <MenuItem onClick={handleClose}>Sede</MenuItem>
-                                        <MenuItem onClick={handleClose}>Preguntas Frecuentes</MenuItem>
-                                        <MenuItem onClick={handleClose}>Documentación</MenuItem>
-                                        <MenuItem onClick={handleClose}>Salir</MenuItem>
+                                        <MenuItem onClick={(event) => handleClose(event, '/')}>Inicio</MenuItem>
+                                        <MenuItem onClick={(event) => handleClose(event, '/objetivo')}>Objetivo</MenuItem>
+                                        <MenuItem onClick={(event) => handleClose(event, '/programa')}>Programa</MenuItem>
+                                        <MenuItem onClick={(event) => handleClose(event, '/formato')}>Formato</MenuItem>
+                                        <MenuItem onClick={(event) => handleClose(event, '/comite')}>Comité</MenuItem>
+                                        <MenuItem onClick={(event) => handleClose(event, '/posters')}>Posters Registrados</MenuItem>
+                                        <MenuItem onClick={(event) => handleClose(event, '/sede')}>Sede</MenuItem>
+                                        <MenuItem onClick={(event) => handleClose(event, '/preguntas')}>Preguntas Frecuentes</MenuItem>
+                                        {
+                                            (status === 'authenticated')
+                                                ?
+                                                (<>
+                                                    <MenuItem onClick={(event) => handleClose(event, '/auth/check-in')}>Documentación</MenuItem>
+                                                    <MenuItem MenuItem onClick={onLogout}>Salir</MenuItem>
+                                                </>)
+                                                : (<>
+                                                    <MenuItem onClick={(event) => handleClose(event, '/auth/login')}>Registro</MenuItem>
+
+                                                </>)
+                                        }
                                     </MenuList>
                                 </ClickAwayListener>
                             </Paper>
