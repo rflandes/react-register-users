@@ -1,7 +1,7 @@
 import { Grid, Typography } from '@mui/material';
 
 
-export const AuthLayout = ({ children, title = '' }) => {
+export const AdminLayout = ({ children, title = '' }) => {
   return (
 
     <Grid
@@ -17,8 +17,7 @@ export const AuthLayout = ({ children, title = '' }) => {
         className='box-shadow'
         xs={3}
         sx={{
-          width: { sm: 450 },
-          // width: '100%',
+          width: '100%',
           backgroundColor: 'white',
           padding: 3,
           borderRadius: 2
